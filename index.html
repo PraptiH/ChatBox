@@ -14,23 +14,83 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
 
-        function ChatInput(){
-            return(
+        function ChatInput() {
+            return (
                 <>
-                <input placeholder="Send a message to ChatBox" size="50"/>
-                <button>Send</button>
+                    <input placeholder="Send a message to ChatBox" size="50" />
+                    <button>Send</button>
                 </>
             )
         }
 
-        const div = (
-            <>
-            {ChatInput()}
-            </>
-        )
+        function ChatMessages() {
+
+            const chatMessages = [
+                {
+                    message: "Hello",
+                    sender: "user",
+                    id: "id1"
+
+                },
+                {
+                    message: "Hello, How can I help you?",
+                    sender: "robot",
+                    id: "id2"
+                },
+                {
+                    message: "Get me todays date?",
+                    sender: "user",
+                    id: "id3"
+
+                },
+                {
+                    message: "Today is May 7",
+                    sender: "robot",
+                    id: "id4"
+                }
+            ];
+
+            return (
+                <>
+                    {
+                        chatMessages.map((chatMessage) => {
+                            return (
+                                <ChatMessage
+                                    message={chatMessage.message}
+                                    sender={chatMessage.sender}
+                                    key={chatMessage.id}
+                                />
+                            )
+                        })
+                    }
+                </>
+            )
+        }
+
+        function ChatMessage({ message, sender }) {
+
+            return (
+                <div>
+                    {sender === 'robot' && <img src="./assets/robot.png" width="50" alt="" />}
+                    {message}
+
+                    {sender === 'user' && <img src="./assets/user.png" width="50" alt="" />}
+                </div>
+            )
+        }
+
+        function App() {
+            return (
+                <>
+                    <ChatInput />
+                    <ChatMessages />
+                </>
+            )
+        }
+
 
         const container = document.querySelector('.js-container');
-        ReactDOM.createRoot(container).render(div);
+        ReactDOM.createRoot(container).render(<App />);
     </script>
 </body>
 
