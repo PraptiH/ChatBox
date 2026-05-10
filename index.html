@@ -52,10 +52,44 @@
                 console.log(response)
             }
 
+            function sendText() {
+                if (event.key === 'Enter') {
+                    const newChatMessages = [
+
+                        ...chatMessages,
+                        {
+                            message: inputText,
+                            sender: 'user',
+                            id: crypto.randomUUID()
+                        }
+
+                    ]
+
+                    setChatMessages(newChatMessages)
+                    setInputText('')
+
+                    const response = Chatbot.getResponse(inputText)
+                    setChatMessages([
+                        ...newChatMessages,
+                        {
+                            message: response,
+                            sender: 'robot',
+                            id: crypto.randomUUID()
+                        }
+                    ])
+                    console.log(response)
+                }
+
+                if(event.key==='Escape'){
+                    setInputText('')
+                }
+            }
+
             return (
                 <>
                     <input placeholder="Send a message to ChatBox" size="50"
                         onChange={saveInputText}
+                        onKeyDown={sendText}
                         value={inputText}
                     />
                     <button onClick={sendMessage}>Send</button>
