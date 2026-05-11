@@ -7,16 +7,20 @@
     <style>
         body {
             font-family: Arial;
+            margin: 0;
         }
 
-        .app {
-            max-width: 600px;
-            margin: 0 auto 0 auto;
+        .appContainer {
+            max-width: 700px;
+            margin: auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .chatField {
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 40px; 
         }
 
         .chatInput {
@@ -54,6 +58,13 @@
         .chatTextRobot {
             display: flex;
             align-items: start;
+        }
+
+        .chatContainer{
+            flex-grow: 1;
+            margin-top: 60px;
+            overflow: scroll;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -152,8 +163,17 @@
 
         function ChatMessages({ chatMessages, setChatMessages }) {
 
+            const chatMessagesRef = React.useRef(null)
+
+            React.useEffect(()=>{
+                const containerElem = chatMessagesRef.current
+                if(containerElem){
+                    containerElem.scrollTop = containerElem.scrollHeight
+                }
+            },[chatMessages])
+
             return (
-                <>
+                <div className="chatContainer" ref={chatMessagesRef}>
                     {
                         chatMessages.map((chatMessage) => {
                             return (
@@ -165,7 +185,7 @@
                             )
                         })
                     }
-                </>
+                </div>
             )
         }
 
@@ -189,16 +209,17 @@
             const [chatMessages, setChatMessages] = React.useState([])
 
             return (
-                <div className="app">
+                <div className="appContainer">
+                    <ChatMessages
+                        chatMessages={chatMessages}
+                        setChatMessages={setChatMessages}
+                    />
 
                     <ChatInput
                         chatMessages={chatMessages}
                         setChatMessages={setChatMessages}
                     />
-                    <ChatMessages
-                        chatMessages={chatMessages}
-                        setChatMessages={setChatMessages}
-                    />
+
                 </div>
             )
         }
