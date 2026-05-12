@@ -37,6 +37,10 @@
   max-width: 300px;
 }
 
+.chatTime{
+  color: rgb(105, 101, 101);
+}
+
 .chatTextUser {
   display: flex;
   align-items: start;
